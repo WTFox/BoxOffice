@@ -32,7 +32,6 @@ def getMovies(defaultScore=60, defaultQuantity=10):
 
     global count
 
-    today = datetime.date.today()
     added_movies = [m.title for m in Movie.select(Movie.title)]
     rtData = requests.get(RT_URL).json()
 
@@ -44,7 +43,7 @@ def getMovies(defaultScore=60, defaultQuantity=10):
             synopsis=rtData["movies"][x]["synopsis"][:500] + '...',
             mpaa_rating=rtData["movies"][x]["mpaa_rating"],
             link=rtData["movies"][x]["links"]["alternate"],
-            date_added=today
+            date_added=datetime.datetime.now()
         )
 
         if movie['audience_score'] > defaultScore and movie["title"] not in added_movies:
