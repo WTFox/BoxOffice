@@ -48,15 +48,17 @@ def getMovies(defaultScore=60, defaultQuantity=10):
         )
 
         if movie['audience_score'] > defaultScore and movie["title"] not in added_movies:
-            logger.info("Adding {} to Couchpotato".format(movie["title"]))
+            logger.info("Adding {} ({}%) to Couchpotato".format(movie["title"], movie["audience_score"]))
             movie_record = Movie(**movie)
             movie_record.save()
 
             addMovieToCP(movie)
             sendNotification(movie)
             count += 1
+        else:
+            logger.info("Skipping {} ({}%)".format(movie["title"], movie["audience_score"]))
 
-    logger.info("{} movies added!".format(count))
+    logger.info("{} movies added.".format(count))
 
     return
 
