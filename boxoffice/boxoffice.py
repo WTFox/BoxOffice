@@ -1,13 +1,14 @@
 from __future__ import print_function
 import datetime
 import urllib.parse
+import logging
 
 import requests
-from peewee import OperationalError
 
-import config
-from models import Movie
-from notifiers import PushBullet
+from . import config
+from .models import Movie
+from .notifiers import PushBullet
+
 
 __author__ = 'afox'
 
@@ -16,6 +17,8 @@ CP_API_KEY = config.CP_API_KEY
 CP_URL = config.CP_URL.format(CP_API_KEY)
 RT_API_KEY = config.RT_API_KEY
 RT_URL = config.RT_URL.format(RT_API_KEY)
+
+logger = logging.getLogger('boxoffice_logger')
 
 
 def getMovies(defaultScore=60, defaultQuantity=10):
@@ -43,6 +46,7 @@ def getMovies(defaultScore=60, defaultQuantity=10):
         )
 
         if movie['audience_score'] > defaultScore and movie["title"] not in added_movies:
+            logger.info("Adding {} to Couchpotato".format(movie["title"]))
             movie_record = Movie(**movie)
             movie_record.save()
 
@@ -74,10 +78,4 @@ def sendNotification(movie):
 
 
 if __name__ == "__main__":
-    try:
-        Movie.create_table()
-    except OperationalError:
-        # Table already exists
-        pass
-
-    getMovies()
+    pass

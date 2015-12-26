@@ -1,7 +1,7 @@
 from peewee import SqliteDatabase, Model, CharField, DateTimeField, OperationalError
 
 __author__ = 'afox'
-database = SqliteDatabase("movies.db")
+database = SqliteDatabase("boxoffice/movies.db")
 
 
 class BaseModel(Model):
