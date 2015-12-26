@@ -19,7 +19,7 @@ RT_API_KEY = config.RT_API_KEY
 RT_URL = config.RT_URL.format(RT_API_KEY)
 
 logger = logging.getLogger('boxoffice_logger')
-
+count = 0
 
 def getMovies(defaultScore=60, defaultQuantity=10):
     """
@@ -29,6 +29,8 @@ def getMovies(defaultScore=60, defaultQuantity=10):
     :param defaultQuantity: How many movies do we want to process. Max is 25.
     :return:
     """
+
+    global count
 
     today = datetime.date.today()
     added_movies = [m.title for m in Movie.select(Movie.title)]
@@ -52,6 +54,9 @@ def getMovies(defaultScore=60, defaultQuantity=10):
 
             addMovieToCP(movie)
             sendNotification(movie)
+            count += 1
+
+    logger.info("{} movies added!".format(count))
 
     return
 
