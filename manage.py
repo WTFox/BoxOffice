@@ -47,7 +47,7 @@ def recentlyAdded(parsed_args):
 
     print("\nThe last 10 movies added were: \n")
     for movie in Movie.select()[:10]:
-        print(movie.audience_score, movie.title)
+        print("{}%\t{}").format(movie.audience_score, movie.title)
 
     return
 
