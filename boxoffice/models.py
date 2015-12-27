@@ -1,4 +1,4 @@
-from peewee import SqliteDatabase, Model, CharField, DateTimeField, OperationalError
+from peewee import SqliteDatabase, Model, CharField, DateTimeField
 
 __author__ = 'afox'
 database = SqliteDatabase("boxoffice/movies.db")
@@ -20,12 +20,3 @@ class Movie(BaseModel):
 
     class Meta:
         order_by = ('-date_added',)
-
-
-if __name__ == "__main__":
-    # Movie.drop_table()
-
-    try:
-        Movie.create_table()
-    except OperationalError:
-        print("Movie table already exists!")
