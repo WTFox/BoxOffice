@@ -1,10 +1,12 @@
 import logging
+import os
 
 from peewee import OperationalError
 
 from boxoffice import boxoffice as b
 from boxoffice.models import Movie
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # create logger with 'spam_application'
 logger = logging.getLogger('boxoffice_logger')
