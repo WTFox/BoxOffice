@@ -9,7 +9,6 @@ from . import config
 from .models import Movie
 from .notifiers import PushBullet
 
-
 __author__ = 'afox'
 
 PB_API_KEY = config.PB_API_KEY
